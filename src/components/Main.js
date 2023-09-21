@@ -20,10 +20,9 @@ export default function Main({ onEditProfile, onEditAvatar, onAddCard }) {
     <main className="content">
       <section className="content__profile profile">
         <div className="profile__avatar-container" onClick={onEditAvatar}>
-          <img
+          <div
+            style={{ backgroundImage: `url(${userInfo.avatar})` }}
             className="profile__avatar"
-            src={userInfo.avatar}
-            alt="Аватар пользователя"
           />
           <div className="profile__figure">
             <div className="profile__icon" />
