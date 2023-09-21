@@ -1,8 +1,9 @@
 import React from "react";
-import Header from "../src/components/Header.js";
-import Main from "../src/components/Main.js";
-import Footer from "../src/components/Footer.js";
-import PopupWithForm from "../src/components/PopupWithForm.js";
+import Header from "./Header.js";
+import Main from "./Main.js";
+import Footer from "./Footer.js";
+import PopupWithForm from "./PopupWithForm.js";
+import ImagePopup from "./ImagePopup.js";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -10,6 +11,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [isAddCardPopupOpen, setIsAddCardPopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -21,10 +23,15 @@ function App() {
     setIsAddCardPopupOpen(true);
   }
 
+  function handleCardClick(card) {
+    setSelectedCard(card);
+  }
+
   function closeAllPopup() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsAddCardPopupOpen(false);
+    setSelectedCard(null);
   }
 
   return (
@@ -34,6 +41,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onEditAvatar={handleEditAvatarClick}
         onAddCard={handleAddCardClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
       {/* Попап редактирования профиля */}
@@ -126,6 +134,10 @@ function App() {
         </label>
       </PopupWithForm>
 
+      {/* Попап картинки */}
+
+      <ImagePopup card={selectedCard} onClose={closeAllPopup} />
+
       <div className="popup" id="confirmPopup">
         <div className="popup__container">
           <button type="button" className="popup__close-btn" />
@@ -144,13 +156,6 @@ function App() {
               Да
             </button>
           </form>
-        </div>
-      </div>
-      <div className="popup popup_type_image" id="imgPopup">
-        <div className="popup__container popup__container_img">
-          <img className="popup__img" alt="" />
-          <p className="popup__text" />
-          <button type="button" className="popup__close-btn" />
         </div>
       </div>
     </div>
