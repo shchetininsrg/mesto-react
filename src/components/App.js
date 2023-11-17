@@ -2,10 +2,10 @@ import React from "react";
 import Header from "./Header.js";
 import Main from "./Main.js";
 import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
 import ImagePopup from "./ImagePopup.js";
 import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
+import AddPlacePopup from "./AddPlacePopup.js";
 import { api } from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
@@ -71,6 +71,15 @@ function App() {
       .catch((error) => console.log(error));
   }
 
+  function handleAddPlaceSubmit(card) {
+    api
+      .createNewCard(card)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+      })
+      .catch((error) => console.log(error));
+  }
+
   function closeAllPopup() {
     setIsEditProfilePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -124,40 +133,11 @@ function App() {
           onUpdateAvatar={handleUpdateAvatar}
         />
         {/* Попап добавления карточки */}
-        <PopupWithForm
-          name="addCard"
-          title="Новое место"
-          textBtn="Создать"
+        <AddPlacePopup
           isOpen={isAddCardPopupOpen}
           onClose={closeAllPopup}
-        >
-          <label className="popup__label">
-            <input
-              placeholder="Название"
-              defaultValue=""
-              name="name"
-              className="popup__input popup__input_name"
-              id="nameMesto"
-              type="text"
-              required=""
-              minLength={2}
-              maxLength={30}
-            />
-            <span id="error-nameMesto" className="popup__error" />
-          </label>
-          <label className="popup__label">
-            <input
-              placeholder="Ссылка на картинку"
-              defaultValue=""
-              name="link"
-              className="popup__input popup__input_link"
-              id="linkImg"
-              type="url"
-              required=""
-            />
-            <span id="error-linkImg" className="popup__error" />
-          </label>
-        </PopupWithForm>
+          onAddPlace={handleAddPlaceSubmit}
+        />
 
         {/* Попап картинки */}
 
