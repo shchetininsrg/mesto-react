@@ -53,7 +53,7 @@ class Api {
       headers: this._header,
       body: JSON.stringify({
         name: data.name,
-        about: data.job,
+        about: data.about,
       }),
     }).then((res) => this._checkStateServ(res));
   }
@@ -77,6 +77,14 @@ class Api {
       method: "DELETE",
       headers: this._header,
     }).then((res) => this._checkStateServ(res));
+  }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if (!isLiked) {
+      return api.deleteLike(cardId);
+    } else {
+      return api.addLike(cardId);
+    }
   }
 }
 

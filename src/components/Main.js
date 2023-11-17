@@ -1,44 +1,24 @@
 import React from "react";
-import { api } from "../utils/Api.js";
 import Card from "./Card.js";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Main({
   onEditProfile,
   onEditAvatar,
   onAddCard,
   onCardClick,
+  onCardLike,
+  cards,
+  onCardDelete,
 }) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((data) => {
-        setUserAvatar(data.avatar);
-        setUserName(data.name);
-        setUserDescription(data.about);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  React.useEffect(() => {
-    api
-      .getDefaultCard()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="content__profile profile">
         <div className="profile__avatar-container" onClick={onEditAvatar}>
           <div
-            style={{ backgroundImage: `url(${userAvatar})` }}
+            style={{ backgroundImage: `url(${currentUser.avatar})` }}
             className="profile__avatar"
           />
           <div className="profile__figure">
@@ -47,8 +27,8 @@ export default function Main({
         </div>
         <div className="profile-info">
           <div className="profile-info__container">
-            <h1 className="profile-info__fullname"> {userName} </h1>
-            <p className="profile-info__description"> {userDescription} </p>
+            <h1 className="profile-info__fullname"> {currentUser.name} </h1>
+            <p className="profile-info__description"> {currentUser.about} </p>
           </div>
           <button
             type="button"
@@ -64,7 +44,13 @@ export default function Main({
       </section>
       <section className="photo-cards">
         {cards.map((card) => (
-          <Card onCardClick={onCardClick} key={card._id} card={card} />
+          <Card
+            onCardLike={onCardLike}
+            onCardClick={onCardClick}
+            onCardDelete={onCardDelete}
+            key={card._id}
+            card={card}
+          />
         ))}
       </section>
     </main>
