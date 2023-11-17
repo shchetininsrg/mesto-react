@@ -39,7 +39,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           className="popup__input popup__input_name"
           id="nameMesto"
           type="text"
-          required=""
+          required
           minLength={2}
           maxLength={30}
           value={name}
@@ -54,7 +54,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           className="popup__input popup__input_link"
           id="linkImg"
           type="url"
-          required=""
+          required
           onChange={handleChangeLink}
           value={link}
         />
