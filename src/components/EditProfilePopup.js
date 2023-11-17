@@ -12,15 +12,15 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     setDescription(currentUser.about);
   }, [currentUser]);
 
-  function handleChangeName(e) {
-    setName(e.target.value);
+  function handleChangeName(evt) {
+    setName(evt.target.value);
   }
-  function handleChangeDescription(e) {
-    setDescription(e.target.value);
+  function handleChangeDescription(evt) {
+    setDescription(evt.target.value);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  function handleSubmit(evt) {
+    evt.preventDefault();
     onUpdateUser({
       name,
       about,
@@ -44,7 +44,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required=""
           minLength={2}
           maxLength={40}
-          value={name || ""}
+          value={name}
           onChange={handleChangeName}
         />
         <span id="error-inputFullname" className="popup__error" />
@@ -58,7 +58,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required=""
           minLength={2}
           maxLength={200}
-          value={about || ""}
+          value={about}
           onChange={handleChangeDescription}
         />
         <span id="error-inputJob" className="popup__error" />

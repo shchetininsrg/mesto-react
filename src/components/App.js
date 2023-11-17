@@ -76,6 +76,7 @@ function App() {
       .createNewCard(card)
       .then((newCard) => {
         setCards([newCard, ...cards]);
+        closeAllPopup();
       })
       .catch((error) => console.log(error));
   }
